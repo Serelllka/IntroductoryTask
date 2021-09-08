@@ -21,6 +21,6 @@ namespace parser
 
     namespace html
     {
-        std::unordered_map<std::string, std::string> parse(const std::string& filepath);
+        std::unordered_map<std::string, std::string> parse(std::istream& inputStream);
     }
 }
