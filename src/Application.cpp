@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[])
 {
-    std::string parameters = "../res/sample.html";
+    std::ifstream parameters("../res/sample.html");
     std::unordered_map<std::string, std::string> dictionary = parser::html::parse(parameters);
 
     std::string filepath = "../res/template.txt";
