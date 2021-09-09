@@ -7,23 +7,20 @@
 
 int main(int argc, char* argv[])
 {
-    //std::fstream inf("../res/template.txt", std::ifstream::in);
-
-    std::string filepath	= "../res/template.txt";
-    std::string output		= "../res/out.txt";
-    std::string parameters	= "../res/sample.html";
-
-    std::ifstream input(filepath);
-    std::ofstream out(output);
-
+    std::ifstream parameters("../res/sample.html");
     std::unordered_map<std::string, std::string> dictionary = parser::html::parse(parameters);
-    parser::parameters::parse(input, out, dictionary);
 
-    std::ifstream stream(output);
+    std::string filepath = "../res/template.txt";
+    std::ifstream input = std::ifstream(filepath);
 
-    std::string line;
-    while (getline(stream, line))
+    std::string mode = argv[1];
+    if (mode == "-c")
     {
-        std::cout << line << std::endl;
+        parser::parameters::parse(input, std::cout, dictionary);
+    }
+    else if (mode == "-f")
+    {
+        std::ofstream output(argv[2]);
+        parser::parameters::parse(input, output, dictionary);
     }
 }

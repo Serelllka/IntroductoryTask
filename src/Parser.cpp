@@ -1,8 +1,6 @@
 #include "Parser.h"
 
-#include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <ctime>
@@ -55,49 +53,40 @@ void parser::parameters::parse(std::istream& inputStream, std::ostream& outputSt
     }
 }
 
-std::unordered_map<std::string, std::string> parser::html::parse(const std::string& filepath)
+std::unordered_map<std::string, std::string> parser::html::parse(std::istream& inputStream)
 {
     std::unordered_map<std::string, std::string> dictionary;
-    std::ifstream stream(filepath);
-    if (!stream)
-    {
-        std::cerr << "Can't find file with such name: " << filepath << std::endl;
-    }
     std::string line;
     std::string paramValue = "";
 
     int position = 0;
-    while (stream)
+    while (inputStream)
     {
         char c;
-        stream >> c;
+        inputStream >> c;
         if (c == '<')
         {
             std::string paramName = "";
-            stream >> c;
+            inputStream >> c;
             while (c != '>')
             {
                 paramName += c;
-                stream >> c;
+                inputStream >> c;
             }
             if (paramName == "root" || paramName == "/root") continue;
             std::string paramValue = "";
-            if (!stream) throw "Oh shit file has been ended";
-            stream >> c;
+            if (!inputStream) throw "Oh shit file has been ended";
+            inputStream >> c;
             while (c != '<')
             {
                 paramValue += c;
-                stream >> c;
+                inputStream >> c;
             }
             if (paramName != "current_date")
                 dictionary.insert(std::make_pair(paramName, paramValue));
-            while (c != '>') stream >> c;
+            while (c != '>') inputStream >> c;
         }
     }
 
     return dictionary;
 }
-
-/*
- * <lol>lol</lol>
- */
