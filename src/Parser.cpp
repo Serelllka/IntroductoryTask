@@ -6,10 +6,9 @@
 #include <ctime>
 
 void parser::parameters::parse(std::istream& inputStream, std::ostream& outputStream,
-                               const std::unordered_map<std::string, std::string>& dictionary)
+                               const std::unordered_map<std::string, std::string>& dictionary, Logger* logger)
 {
     std::string line;
-    //std::vector<parameter> listOfParams;
 
     while(getline(inputStream, line))
     {
@@ -51,9 +50,11 @@ void parser::parameters::parse(std::istream& inputStream, std::ostream& outputSt
 
         outputStream << lineCopy;
     }
+
+    logger->logGen("buffer was successfully parsed");
 }
 
-std::unordered_map<std::string, std::string> parser::html::parse(std::istream& inputStream)
+std::unordered_map<std::string, std::string> parser::html::parse(std::istream& inputStream, Logger* logger)
 {
     std::unordered_map<std::string, std::string> dictionary;
     std::string line;
@@ -75,7 +76,10 @@ std::unordered_map<std::string, std::string> parser::html::parse(std::istream& i
             }
             if (paramName == "root" || paramName == "/root") continue;
             std::string paramValue = "";
-            if (!inputStream) throw "Oh shit file has been ended";
+            if (!inputStream)
+            {
+                throw "Oh shit file has been ended";
+            }
             inputStream >> c;
             while (c != '<')
             {
@@ -87,6 +91,8 @@ std::unordered_map<std::string, std::string> parser::html::parse(std::istream& i
             while (c != '>') inputStream >> c;
         }
     }
+
+    logger->logGen("parameters were successfully framed");
 
     return dictionary;
 }

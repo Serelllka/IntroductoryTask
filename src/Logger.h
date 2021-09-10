@@ -1,6 +1,8 @@
 #pragma once
 
-#include<string>
+#include <iostream>
+#include <string>
+
 
 class Logger
 {
@@ -10,6 +12,6 @@ public:
     Logger(std::ostream& output);
     ~Logger() = default;
 
-    void logErr(std::string& message);
-    void logGen(std::string& message);
+    void logErr(const std::string& message);
+    void logGen(const std::string& message);
 };

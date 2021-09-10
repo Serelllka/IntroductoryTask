@@ -2,13 +2,19 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
+#include <chrono>
 
 #include "Parser.h"
+#include "Logger.h"
 
 int main(int argc, char* argv[])
 {
+    std::ofstream  logPath("../log/log.log", std::ios::app);
+    Logger logger(logPath);
+
     std::ifstream parameters("../res/sample.html");
     std::unordered_map<std::string, std::string> dictionary = parser::html::parse(parameters);
+    logger.logGen("parameters were successfully parsed");
 
     std::string filepath = "../res/template.txt";
     std::ifstream input = std::ifstream(filepath);
