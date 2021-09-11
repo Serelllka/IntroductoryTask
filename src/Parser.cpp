@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "MyException.h"
 
 #include <iostream>
 #include <string>
@@ -51,14 +52,13 @@ void parser::parameters::parse(std::istream& inputStream, std::ostream& outputSt
         outputStream << lineCopy;
     }
 
-    logger->logGen("buffer was successfully parsed");
+    logger->logGen("parameters were successfully framed");
 }
 
 std::unordered_map<std::string, std::string> parser::html::parse(std::istream& inputStream, Logger* logger)
 {
     std::unordered_map<std::string, std::string> dictionary;
     std::string line;
-    std::string paramValue = "";
 
     int position = 0;
     while (inputStream)
@@ -74,11 +74,14 @@ std::unordered_map<std::string, std::string> parser::html::parse(std::istream& i
                 paramName += c;
                 inputStream >> c;
             }
-            if (paramName == "root" || paramName == "/root") continue;
+            if (paramName == "root" || paramName == "/root")
+            {
+                continue;
+            }
             std::string paramValue = "";
             if (!inputStream)
             {
-                throw "Oh shit file has been ended";
+                throw MyException("this file can't be parsed correctly");
             }
             inputStream >> c;
             while (c != '<')
@@ -92,7 +95,7 @@ std::unordered_map<std::string, std::string> parser::html::parse(std::istream& i
         }
     }
 
-    logger->logGen("parameters were successfully framed");
+    logger->logGen("parameters were successfully parsed");
 
     return dictionary;
 }

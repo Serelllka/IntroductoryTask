@@ -9,7 +9,7 @@ MyException::MyException(const std::string &message)
     std::cerr << message;
 }
 
-MyException::MyException(Logger &logger, const std::string &message)
+MyException::MyException(const std::string &message, Logger& logger)
 {
     std::cerr << message;
     logger.logErr(message);

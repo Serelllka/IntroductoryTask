@@ -6,8 +6,10 @@
 
 class MyException : public std::exception
 {
+public:
     MyException() = default;
-    MyException(const std::string& message);
-    MyException(Logger& logger, const std::string& message);
+    explicit MyException(const std::string& message);
+    explicit MyException(const std::string& message, Logger& logger);
+
     virtual ~MyException() = default;
 };
