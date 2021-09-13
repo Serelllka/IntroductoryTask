@@ -3,4 +3,6 @@ project(IntroductoryTask)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(IntroductoryTask src/Application.cpp src/Parser.cpp src/Parser.h src/Logger.cpp src/Logger.h src/MyException.cpp src/MyException.h src/FunctionsRegister.cpp src/FunctionsRegister.h)
+link_directories(IntroductoryTask ws2_32.lib)
+
+add_executable(IntroductoryTask src/Application.cpp src/Parser.cpp src/Parser.h src/Logger.cpp src/Logger.h src/MyException.cpp src/MyException.h src/FunctionsRegister.cpp src/FunctionsRegister.h src/networking/networkingManager.cpp src/networking/networkingManager.h)

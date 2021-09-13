@@ -5,16 +5,16 @@
 #include <chrono>
 
 #include "Parser.h"
-#include "Logger.h"
 #include "FunctionsRegister.h"
+#include "networking/networkingManager.h"
 
 int test1(int argc, char* argv[])
 {
     std::ofstream  logPath("../log/log.log", std::ios::app);
-    Logger logger(logPath);
+    Parser parser(logPath);
 
     std::ifstream parameters("../res/sample.html");
-    std::unordered_map<std::string, std::string> dictionary = parser::html::parse(parameters, &logger);
+    std::unordered_map<std::string, std::string> dictionary = parser.html(parameters, &logger);
 
     std::string filepath = "../res/template.txt";
     std::ifstream input = std::ifstream(filepath);
@@ -33,8 +33,9 @@ int test1(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+    networkingManager nm;
     //test1(argc, argv);
-    FunctionsRegister functionsRegister;
-    functionsRegister.AddFunction("lol", [](){return "ebat";});
-    std::cout << functionsRegister.FindFunction("lol")();
+    //FunctionsRegister functionsRegister;
+    //functionsRegister.AddFunction("lol", [](){return "ebat";});
+    //std::cout << functionsRegister.FindFunction("lol")();
 }

@@ -6,16 +6,16 @@
 
 #include "Logger.h"
 
-namespace parser
+class Parser
 {
-    namespace parameters
-    {
-        void parse(std::istream& inputStream, std::ostream& outputStream,
-                   const std::unordered_map<std::string, std::string>& dictionary, Logger* logger = nullptr);
-    }
+public:
+    Parser(std::ostream& output);
+    ~Parser() = default;
 
-    namespace html
-    {
-        std::unordered_map<std::string, std::string> parse(std::istream& inputStream, Logger* logger = nullptr);
-    }
-}
+    void parameters(std::istream& inputStream, std::ostream& outputStream,
+               const std::unordered_map<std::string, std::string>& dictionary);
+
+    std::unordered_map<std::string, std::string> html(std::istream& inputStream);
+private:
+    Logger _logger;
+};

@@ -7,11 +7,11 @@
 class Logger
 {
 private:
-    std::ostream& output;
+    std::ostream& _output;
 public:
     Logger(std::ostream& output);
     ~Logger() = default;
 
-    void logErr(const std::string& message);
-    void logGen(const std::string& message);
+    void LogErr(const std::string& message);
+    void LogGen(const std::string& message);
 };

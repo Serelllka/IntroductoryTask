@@ -6,8 +6,8 @@
 #include <unordered_map>
 #include <ctime>
 
-void parser::parameters::parse(std::istream& inputStream, std::ostream& outputStream,
-                               const std::unordered_map<std::string, std::string>& dictionary, Logger* logger)
+void Parser::parameters(std::istream& inputStream, std::ostream& outputStream,
+                               const std::unordered_map<std::string, std::string>& dictionary)
 {
     std::string line;
 
@@ -52,10 +52,10 @@ void parser::parameters::parse(std::istream& inputStream, std::ostream& outputSt
         outputStream << lineCopy;
     }
 
-    logger->logGen("parameters were successfully framed");
+    _logger.LogGen("parameters were successfully framed");
 }
 
-std::unordered_map<std::string, std::string> parser::html::parse(std::istream& inputStream, Logger* logger)
+std::unordered_map<std::string, std::string> Parser::html(std::istream& inputStream)
 {
     std::unordered_map<std::string, std::string> dictionary;
     std::string line;
@@ -95,7 +95,11 @@ std::unordered_map<std::string, std::string> parser::html::parse(std::istream& i
         }
     }
 
-    logger->logGen("parameters were successfully parsed");
+    _logger.LogGen("parameters were successfully parsed");
 
     return dictionary;
 }
+
+Parser::Parser(std::ostream& output)
+    : _logger(output)
+{}

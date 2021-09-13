@@ -12,5 +12,5 @@ MyException::MyException(const std::string &message)
 MyException::MyException(const std::string &message, Logger& logger)
 {
     std::cerr << message;
-    logger.logErr(message);
+    logger.LogErr(message);
 }
