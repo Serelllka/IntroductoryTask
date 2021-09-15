@@ -6,6 +6,10 @@
 #include <unordered_map>
 #include <ctime>
 
+Parser::Parser(Logger& logger)
+        : _logger(logger)
+{}
+
 void Parser::parameters(std::istream& inputStream, std::ostream& outputStream,
                                const std::unordered_map<std::string, std::string>& dictionary)
 {
@@ -99,7 +103,3 @@ std::unordered_map<std::string, std::string> Parser::html(std::istream& inputStr
 
     return dictionary;
 }
-
-Parser::Parser(std::ostream& output)
-    : _logger(output)
-{}

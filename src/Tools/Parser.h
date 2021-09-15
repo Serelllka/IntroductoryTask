@@ -9,7 +9,7 @@
 class Parser
 {
 public:
-    Parser(std::ostream& output);
+    Parser(Logger& logger);
     ~Parser() = default;
 
     void parameters(std::istream& inputStream, std::ostream& outputStream,

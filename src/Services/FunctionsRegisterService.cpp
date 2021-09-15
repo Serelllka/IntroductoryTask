@@ -2,10 +2,10 @@
 // Created by vprog on 9/11/2021.
 //
 
-#include "FunctionsRegister.h"
-#include "MyException.h"
+#include "FunctionsRegisterService.h"
+#include "../Tools/MyException.h"
 
-const std::function<std::string()> &FunctionsRegister::FindFunction(const std::string &functionName)
+const std::function<std::string()> &FunctionsRegisterService::FindFunction(const std::string &functionName)
 {
     auto obtainedFunction = _functions.find(functionName);
     if (obtainedFunction == _functions.end())
@@ -15,7 +15,7 @@ const std::function<std::string()> &FunctionsRegister::FindFunction(const std::s
     return obtainedFunction->second;
 }
 
-void FunctionsRegister::AddFunction(std::string functionName, std::function<std::string()> function)
+void FunctionsRegisterService::AddFunction(std::string functionName, std::function<std::string()> function)
 {
     auto obtainedFunction = _functions.find(functionName);
     if (obtainedFunction != _functions.end())
