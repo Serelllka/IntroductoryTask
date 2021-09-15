@@ -1,15 +1,19 @@
 #include "Parser.h"
+#include "MyException.h"
 
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <ctime>
 
-void parser::parameters::parse(std::istream& inputStream, std::ostream& outputStream,
+Parser::Parser(Logger& logger)
+        : _logger(logger)
+{}
+
+void Parser::parameters(std::istream& inputStream, std::ostream& outputStream,
                                const std::unordered_map<std::string, std::string>& dictionary)
 {
     std::string line;
-    //std::vector<parameter> listOfParams;
 
     while(getline(inputStream, line))
     {
@@ -51,13 +55,14 @@ void parser::parameters::parse(std::istream& inputStream, std::ostream& outputSt
 
         outputStream << lineCopy;
     }
+
+    _logger.LogGen("parameters were successfully framed");
 }
 
-std::unordered_map<std::string, std::string> parser::html::parse(std::istream& inputStream)
+std::unordered_map<std::string, std::string> Parser::html(std::istream& inputStream)
 {
     std::unordered_map<std::string, std::string> dictionary;
     std::string line;
-    std::string paramValue = "";
 
     int position = 0;
     while (inputStream)
@@ -73,9 +78,15 @@ std::unordered_map<std::string, std::string> parser::html::parse(std::istream& i
                 paramName += c;
                 inputStream >> c;
             }
-            if (paramName == "root" || paramName == "/root") continue;
+            if (paramName == "root" || paramName == "/root")
+            {
+                continue;
+            }
             std::string paramValue = "";
-            if (!inputStream) throw "Oh shit file has been ended";
+            if (!inputStream)
+            {
+                throw MyException("this file can't be parsed correctly");
+            }
             inputStream >> c;
             while (c != '<')
             {
@@ -87,6 +98,8 @@ std::unordered_map<std::string, std::string> parser::html::parse(std::istream& i
             while (c != '>') inputStream >> c;
         }
     }
+
+    _logger.LogGen("parameters were successfully parsed");
 
     return dictionary;
 }
